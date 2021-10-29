@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".FragmentFirst"
+    android:orientation="vertical">
+    <LinearLayout
+        android:id="@+id/viewGroup"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:gravity="center">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center">
+            <Button
+                android:id="@+id/add"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Add"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                android:layout_margin="@dimen/cardview_default_radius"
+                android:textColor="#fffffc"/>
+
+            <Button
+                android:id="@+id/sub"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="SUB"
+                android:textColor="#fffffc"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                android:layout_margin="@dimen/cardview_default_radius"
+                android:layout_toRightOf="@id/add"/>
+
+            <Button
+                android:id="@+id/mul"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="MUL"
+                android:textColor="#fffffc"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                android:layout_margin="@dimen/cardview_default_radius"
+                android:layout_below="@id/add"
+                />
+
+            <Button
+                android:id="@+id/div"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="DIV"
+                android:textColor="#fffffc"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                android:layout_toRightOf="@id/mul"
+                android:layout_margin="@dimen/cardview_default_radius"
+                android:layout_below="@id/sub"/>
+        </RelativeLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/answerGrp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="  Result Screen  "
+            android:textSize="25sp"
+            android:background="@android:color/holo_green_light"
+            android:textAlignment="center"
+            />
+        <TextView
+            android:id="@+id/answer_id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:textColor="@android:color/background_dark"
+            android:textSize="20sp"
+            android:padding="10dp"/>
+        <Button
+            android:id="@+id/reset"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Reset"
+            android:textColor="#fffffc"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            android:layout_alignBottom="@id/answer_id" />
+    </LinearLayout>
+
+</LinearLayout>
