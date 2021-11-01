@@ -17,8 +17,7 @@ class MainActivity : AppCompatActivity() {
         super.onBackPressed()
         val finishF=supportFragmentManager.findFragmentById(R.id.container)
         val f2=supportFragmentManager.findFragmentByTag("fragment2a")
-        Log.i("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$", "onBackPressed: ")
-        if(finishF is FragmentFirst)
+        if(finishF is FragmentFirst && finishF.finish)
             finish()
     }
 }

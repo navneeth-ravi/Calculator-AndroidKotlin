@@ -1,6 +1,7 @@
 package com.example.nav_calculator_20
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,12 +14,13 @@ import androidx.fragment.app.Fragment
 
 class FragmentFirst : Fragment() {
     private var viewForRestore:View?=null
+    var finish=true
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,savedInstanceState: Bundle?): View? {
-
+        finish=true
         val view=inflater.inflate(R.layout.fragment_first, container, false)
         viewForRestore=view
-        onRestore(view,savedInstanceState)
         view.findViewById<LinearLayout>(R.id.answerGrp).visibility=View.GONE
+        onRestore(view,savedInstanceState)
         buttonUsage(view)
         setFragmentListener(view)
         onBackPressed(view)
@@ -29,8 +31,9 @@ class FragmentFirst : Fragment() {
         val callback = object : OnBackPressedCallback(true){
             override fun handleOnBackPressed() {
                 if(answerGrp.visibility==View.VISIBLE){
+                    finish=!finish
                     val a=activity?.supportFragmentManager?.beginTransaction()
-                    a?.replace(R.id.container,FragmentSecond(),"fragment2a")
+                    a?.replace(R.id.container,FragmentFirst(),"fragment1a")
                     a?.addToBackStack(null)?.commit()
                 }
             }
@@ -39,13 +42,14 @@ class FragmentFirst : Fragment() {
     }
 
     private fun onRestore(view:View,savedInstanceState: Bundle?){
+//        ch=true
         val answerGrp =view.findViewById<LinearLayout>(R.id.answerGrp)
         val viewGrp = view.findViewById<LinearLayout>(R.id.viewGroup)
         val answerText=view.findViewById<TextView>(R.id.answer_id)
         if(savedInstanceState !=null){
             if(savedInstanceState.getInt("visible")==View.GONE){
-                viewGrp.visibility=View.GONE
                 answerGrp.visibility=View.VISIBLE
+                viewGrp.visibility=View.GONE
                 answerText.text=savedInstanceState.getString("result")
             }
         }
