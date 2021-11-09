@@ -14,43 +14,56 @@ import androidx.fragment.app.Fragment
 
 class FragmentFirst : Fragment() {
     private var viewForRestore:View?=null
-    var finish=true
+    var fi=false
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,savedInstanceState: Bundle?): View? {
-        finish=true
         val view=inflater.inflate(R.layout.fragment_first, container, false)
         viewForRestore=view
         view.findViewById<LinearLayout>(R.id.answerGrp).visibility=View.GONE
+        Log.i("$$$$$$$$$$$$$$$$$$$$$$$", "answer Gone ")
         onRestore(view,savedInstanceState)
+        onBackPressed(view)
         buttonUsage(view)
         setFragmentListener(view)
-        onBackPressed(view)
+        Log.i("#####################", "onCreate123: ")
         return view
     }
     private  fun onBackPressed(view:View){
         val answerGrp =view.findViewById<LinearLayout>(R.id.answerGrp)
+        val viewGroup=view.findViewById<LinearLayout>(R.id.viewGroup)
         val callback = object : OnBackPressedCallback(true){
             override fun handleOnBackPressed() {
-                if(answerGrp.visibility==View.VISIBLE){
-                    finish=!finish
-                    val a=activity?.supportFragmentManager?.beginTransaction()
-                    a?.replace(R.id.container,FragmentFirst(),"fragment1a")
-                    a?.addToBackStack(null)?.commit()
+                Log.i("#############################", "onBackAlllllll: ")
+                if(viewGroup.visibility!=View.VISIBLE){
+                    activity?.supportFragmentManager?.popBackStack("abc",0)
+                    activity?.supportFragmentManager?.beginTransaction()?.replace(R.id.container,FragmentFirst(),"fragment1a")
+                        ?.addToBackStack("abc")?.commit()
                 }
+
+                else{
+                    activity?.finish()
+                }
+                var asd=activity?.supportFragmentManager?.backStackEntryCount
+                Log.i("#############################", "F1-1Count : $asd ")
+
             }
         }
         requireActivity().onBackPressedDispatcher.addCallback(callback)
+
     }
 
     private fun onRestore(view:View,savedInstanceState: Bundle?){
-//        ch=true
         val answerGrp =view.findViewById<LinearLayout>(R.id.answerGrp)
         val viewGrp = view.findViewById<LinearLayout>(R.id.viewGroup)
         val answerText=view.findViewById<TextView>(R.id.answer_id)
         if(savedInstanceState !=null){
+            var asd=activity?.supportFragmentManager?.backStackEntryCount
+            Log.i("#############################", "F1Count : $asd ")
+            Log.i("#############################", "onRestore: ")
             if(savedInstanceState.getInt("visible")==View.GONE){
                 answerGrp.visibility=View.VISIBLE
                 viewGrp.visibility=View.GONE
                 answerText.text=savedInstanceState.getString("result")
+//                fi=true
             }
         }
     }
@@ -63,6 +76,7 @@ class FragmentFirst : Fragment() {
             viewGrp.visibility=View.GONE
             answerGrp.visibility=View.VISIBLE
             answerText.text=bundle.getString("result")
+
         }
     }
 
@@ -70,7 +84,8 @@ class FragmentFirst : Fragment() {
         parentFragmentManager.setFragmentResult("fragment1",bundle)
         val a=activity?.supportFragmentManager?.beginTransaction()
         a?.replace(R.id.container,FragmentSecond(),"fragment2a")
-        a?.addToBackStack(null)?.commit()
+        a?.addToBackStack("f2")?.commit()
+//        fi=true
     }
 
     private fun buttonUsage(view:View){
@@ -101,6 +116,7 @@ class FragmentFirst : Fragment() {
         reset.setOnClickListener {
             viewGrp.visibility=View.VISIBLE
             answerGrp.visibility=View.GONE
+            fi=false
         }
     }
 
@@ -109,7 +125,9 @@ class FragmentFirst : Fragment() {
         val visible=viewForRestore?.findViewById<LinearLayout>(R.id.viewGroup)
         outState.putInt("visible",if(visible?.visibility!=null) visible.visibility else -1)
         outState.putString("result",answerText?.text.toString())
+        outState.putBoolean("back",true)
+        var a=answerText?.text.toString()
+        var b=visible?.visibility
         super.onSaveInstanceState(outState)
-
     }
 }

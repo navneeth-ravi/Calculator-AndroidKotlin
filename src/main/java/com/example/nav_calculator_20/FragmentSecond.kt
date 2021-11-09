@@ -20,7 +20,6 @@ enum class CalculateFun(val value:String){
 }
 class FragmentSecond : Fragment() {
     private var viewForRestore:View?=null
-
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,savedInstanceState: Bundle?): View? {
         val view=inflater.inflate(R.layout.fragment_second, container, false)
         viewForRestore=view
@@ -44,10 +43,18 @@ class FragmentSecond : Fragment() {
     private fun onBackPressed(){
         val callback=object : OnBackPressedCallback(true){
             override fun handleOnBackPressed() {
-                val a=activity?.supportFragmentManager?.beginTransaction()
-                a?.replace(R.id.container,FragmentFirst(),"fragment1a")
-                a?.addToBackStack(null)?.commit()
-                Log.i("fragment2$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$", "handleOnBackPressed: ")
+                var asd=activity?.supportFragmentManager?.backStackEntryCount
+                Log.i("#############################", "F2-1Count : $asd ")
+                activity?.supportFragmentManager?.popBackStack("abc",0)
+//                val a=activity?.supportFragmentManager?.beginTransaction()
+//                a?.replace(R.id.container,FragmentFirst(),"fragment1a")
+//                a?.addToBackStack("abc")?.commit()
+                asd=activity?.supportFragmentManager?.backStackEntryCount
+                Log.i("#############################", "F2-2Count : $asd ")
+                Log.i("#####################", "F2 Back............. : ")
+//                activity?.supportFragmentManager?.popBackStack("abc",0)
+//                activity?.supportFragmentManager?.beginTransaction()?.replace(R.id.container,FragmentFirst(),"fragment1a")
+//                    ?.addToBackStack("abc")?.commit()
             }
         }
         requireActivity().onBackPressedDispatcher.addCallback(callback)
@@ -66,6 +73,8 @@ class FragmentSecond : Fragment() {
                 bundle.putString("result", "$resultTemplate\nResult      : $result")
                 if(cal.text.equals(CalculateFun.DIV.value) && result==-1)
                     bundle.putString("result","$resultTemplate\nCan not be Divided by Zero")
+//                activity?.supportFragmentManager?.beginTransaction()?.replace(R.id.container,FragmentFirst(),"fragment1a")
+//                    ?.addToBackStack("abc")?.commit()
                 parentFragmentManager.setFragmentResult("fragment2",bundle)
             }
             else{
@@ -74,10 +83,8 @@ class FragmentSecond : Fragment() {
                 val toast = Toast.makeText(context, text, duration)
                 toast.show()
             }
+            activity?.supportFragmentManager?.popBackStack("abc",0)
             parentFragmentManager.beginTransaction().remove(this)
-            val a=activity?.supportFragmentManager?.beginTransaction()
-            a?.replace(R.id.container,FragmentFirst(),"fragment1a")
-            a?.addToBackStack(null)?.commit()
         }
     }
 
@@ -91,8 +98,8 @@ class FragmentSecond : Fragment() {
             CalculateFun.ADD.value-> return num1+num2
             CalculateFun.SUB.value-> return num1-num2
             CalculateFun.DIV.value-> {
-                if(num2==0)return -1
-                else return num1/num2
+                return if(num2==0) -1
+                else num1/num2
             }
             CalculateFun.MUL.value->return num1*num2
         }
