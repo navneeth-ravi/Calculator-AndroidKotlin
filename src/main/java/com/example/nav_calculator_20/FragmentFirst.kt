@@ -15,7 +15,6 @@ import androidx.fragment.app.Fragment
 class FragmentFirst : Fragment() {
     private var viewForRestore:View?=null
     var fi=false
-    val l=true
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,savedInstanceState: Bundle?): View? {
         val view=inflater.inflate(R.layout.fragment_first, container, false)
         viewForRestore=view
